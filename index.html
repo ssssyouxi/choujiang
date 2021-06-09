@@ -9,20 +9,23 @@
 </head>
 
 <body>
-    <ul style="float:left;padding-right: 20px;">
+    <ul style="padding-right: 20px;">
         <li><h1>一等奖：抽到1</h1></li>
         <li><h2>二等奖：抽到2/3</h2></li>
         <li><h3>三等奖：抽到4/5</h3></li>
         <li style="padding-bottom:20px">参与奖：抽到6/7/8</li>
         <li>我想抽（数字1-8）：<input type="text" value='2' placeholder="默认抽到2" id="resultCode"></li>
     </ul>
-    <div style="margin:0 auto; width:500px;float:left">
-        <p>
-            <img src="images/orderedList0.png" id="imgTurn" />@*默认有一张全部亮的图片*@
+    <div style="">
+        <p class="display:inline-block">
+            <img src="images/orderedList0.png" id="imgTurn" />
+
+            <p>@*默认有一张全部亮的图片*@</p>
         </p>
         <input type="button" id="but_bulliondraw" value="开始抽奖" />
     </div>
-    <ul style="opacity: 0;">
+    <div></div>
+    <ul style="display:none">
         <li><img src="./images/1.png" alt=""></li>
         <li><img src="./images/2.png" alt=""></li>
         <li><img src="./images/3.png" alt=""></li>

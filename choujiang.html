@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <ul style="float:left;padding-right: 20px;">
+        <li><h1>一等奖：抽到1</h1></li>
+        <li><h2>二等奖：抽到2/3</h2></li>
+        <li><h3>三等奖：抽到4/5</h3></li>
+        <li style="padding-bottom:20px">参与奖：抽到6/7/8</li>
+        <li>我想抽（数字1-8）：<input type="text" value='2' placeholder="默认抽到2" id="resultCode"></li>
+    </ul>
+    <div style="margin:0 auto; width:500px;float:left">
+        <p>
+            <img src="images/orderedList0.png" id="imgTurn" />@*默认有一张全部亮的图片*@
+        </p>
+        <input type="button" id="but_bulliondraw" value="开始抽奖" />
+    </div>
+    
+</body>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
+<script>
+    var resultCode = "0";//后台返回的结果的值
+    var auto, count = 0, i = 0;//auto:时间对象 count：计数器 ，i ： 计数器
+    
+    var arry = ["1", "2", "3", "4", "5", "6", "7", "8"]; //返回值的数组，图片以数组中的数字命名
+    function turn() {
+        /// <summary>
+        /// 转盘旋转
+        /// </summary>
+        i = (i == arry.length - 1) ? 0 : i + 1;
+        $("#imgTurn").attr("src", "images/" + arry[i] + ".png");
+
+        //以下调整可以设置转盘转速
+        if (count < 20) {
+            auto = setTimeout(turn, 80);
+        } else if (count >= 20 && count < 30) {
+            auto = setTimeout(turn, 120);
+        } else if (count >= 30 && count < 40) {
+            auto = setTimeout(turn, 160);
+        } else if (count >= 40 && count < 50) {
+            auto = setTimeout(turn, 280);
+        } else if (count >= 50 && count < 60) {
+            auto = setTimeout(turn, 500);
+        }
+        else {
+            auto = setTimeout(turn, 1000);
+        }
+        if (arry[i] == resultCode) {
+            //当等于后台返回的值的时候停止转
+            count = 0;
+            resultCode = 0;
+            clearTimeout(auto);
+
+            $("#but_bulliondraw").bind("click", fun);
+
+            return;
+        }
+        count += 1;
+    }
+
+
+    function beginTurn() {
+        /// <summary>
+        /// 开始旋转
+        /// </summary>
+        /// <returns type=""></returns>
+        if (count == 0) {
+            $("#imgTurn").attr("src", "images/" + arry[i] + ".png");
+            turn();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    $(function () {
+        //点击开始旋转
+        $("#but_bulliondraw").bind("click", fun);
+    });
+    var fun = function () {
+        $("#but_bulliondraw").unbind("click");
+        if (beginTurn()) {
+            //这里可以从后台请求返回的值，赋值给resultCode
+            setTimeout(function () { resultCode = $("#resultCode").val() }, 5000);
+        }
+    };
+</script>
+
+</html>
